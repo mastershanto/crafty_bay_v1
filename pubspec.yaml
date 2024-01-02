@@ -1,4 +1,4 @@
-name: task_manager_project
+name: crafty_bay_v1
 description: This is my second practice project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -28,6 +28,7 @@ dependencies:
   pin_code_fields: ^8.0.1
   shared_preferences: ^2.2.2
   image_picker: ^1.0.4
+  get: ^4.6.6
 
 
 dev_dependencies:
