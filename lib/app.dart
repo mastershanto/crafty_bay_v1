@@ -22,9 +22,3 @@ class _CraftyBayState extends State<CraftyBay> {
   }
 }
 
-class ControllerBindings extends Bindings {
-  @override
-  void dependencies() {
-    // TODO: implement dependencies
-  }
-}
