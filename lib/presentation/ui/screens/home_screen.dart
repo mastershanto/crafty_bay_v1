@@ -1,9 +1,13 @@
+import 'package:crafty_bay_v1/presentation/state_holders/main_bottom_nav_controller.dart';
+import 'package:crafty_bay_v1/presentation/ui/screens/product_list_screen.dart';
 import 'package:crafty_bay_v1/presentation/ui/utility/assets_path.dart';
 import 'package:flutter/material.dart';
-import '../utility/app_colors.dart';
+import 'package:get/get.dart';
+import '../widgets/category_item.dart';
 import '../widgets/home/circle_icon_button.dart';
-import '../widgets/banner_carousel_slider.dart';
+import '../widgets/home/banner_carousel_slider.dart';
 import '../widgets/home/section_title.dart';
+import '../widgets/product_card_item.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -32,30 +36,88 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 16),
                 SectionTitle(
                   title: "All Categories",
-                  onTapSeeAll: () {},
+                  onTapSeeAll: () {
+                    Get.find<MainBottomNavController>().changeIndex(1);
+                  },
                 ),
-                const SizedBox(height: 16),
-                SizedBox(
-                  height: 100,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 100,
-                    itemBuilder: (context,index) {
-                      return Card(
-                        elevation:0,
-                        color: AppColors.primaryColor.withOpacity(.2),
-                        child: const Padding(
-                          padding: EdgeInsets.all(24.0),
-                          child: Icon(Icons.computer,size:30,color:AppColors.primaryColor),
-                        ),
+                const SizedBox(height: 8),
+                categoryList,
+                const SizedBox(height: 8),
+                SectionTitle(
+                    title: "Popular",
+                    onTapSeeAll: () {
+                      // Get.find<MainBottomNavController>().changeIndex(3);
+                      Get.to(
+                        ProductListScreen(),
                       );
-                    },
-                  ),
+                    }),
+                productList,
+                const SizedBox(height: 8),
+                SectionTitle(
+                  title: "Special",
+                  onTapSeeAll: () {
+                    // Get.find<MainBottomNavController>().changeIndex(3);
+                    Get.to(
+                      ProductListScreen(category:"Special"),
+                    );
+                  },
                 ),
+                productList,
+                const SizedBox(height: 16),
+                SectionTitle(
+                  title: "New",
+                  onTapSeeAll: () {
+                    // Get.find<MainBottomNavController>().changeIndex(3);
+                    Get.to(
+                      ProductListScreen(category:"New"),
+                    );
+                  },
+                ),
+                productList,
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  SizedBox get productList {
+    return SizedBox(
+      height: 190,
+      child: ListView.separated(
+        itemCount: 100,
+        primary: false,
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return const ProductCardItem();
+        },
+        separatorBuilder: (_, __) {
+          return const SizedBox(
+            width: 8,
+          );
+        },
+      ),
+    );
+  }
+
+  SizedBox get categoryList {
+    return SizedBox(
+      height: 135,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: 100,
+        primary: false,
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return const CategoryItem(title: "Electronics\nOthers",);
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const SizedBox(
+            width: 8,
+          );
+        },
       ),
     );
   }
@@ -101,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   AppBar get appBar {
     return AppBar(
-      title: Image.asset(AssetsPath.logoNav),
+      title: Image.asset(AssetsPath.logoNavPng),
       actions: [
         CircleIconButton(
           onTap: () {},

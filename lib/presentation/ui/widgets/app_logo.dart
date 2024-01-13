@@ -10,6 +10,6 @@ final double? height;
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(AssetsPath.logo,width:width??120, height:height??120);
+    return Image.asset(AssetsPath.logoPng,width:width??120, height:height??120);
   }
 }

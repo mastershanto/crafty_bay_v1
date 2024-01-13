@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-import '../utility/app_colors.dart';
+import '../../utility/app_colors.dart';
 
 class BannerCarouselSlider extends StatefulWidget {
   const BannerCarouselSlider({super.key, this.height});
@@ -25,6 +25,8 @@ class _BannerCarouselSliderState extends State<BannerCarouselSlider> {
             onPageChanged: (index, reason) {
               _currentIndex.value = index;
             },
+            // viewportFraction: 1,
+            viewportFraction: 3,
             // autoPlay: true,
             // enableInfiniteScroll: false,
           ),
@@ -33,7 +35,7 @@ class _BannerCarouselSliderState extends State<BannerCarouselSlider> {
               builder: (BuildContext context) {
                 return Container(
                   width: MediaQuery.of(context).size.width,
-                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                  margin: const EdgeInsets.symmetric(horizontal: 1.0),
                   decoration: BoxDecoration(
                     color: AppColors.primaryColor,
                     borderRadius: BorderRadius.circular(8),

@@ -30,6 +30,7 @@ dependencies:
   image_picker: ^1.0.4
   get: ^4.6.6
   carousel_slider: ^4.2.1
+  item_count_number_button: ^1.9.2
 
 
 
