@@ -15,7 +15,7 @@ class CartProductItem extends StatefulWidget {
 }
 
 class _CartProductItemState extends State<CartProductItem> {
-
+  var callBackValue=0;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -79,7 +79,17 @@ class _CartProductItemState extends State<CartProductItem> {
                         color: AppColors.primaryColor,
                       ),
                     ),
-                    ItemsCounterWidget(noOfItems: 1,),
+                    ItemsCounterWidget(
+                      initialValue: 1,
+                      minValue: 0,
+                      maxValue: 5,
+                      color: AppColors.primaryColor,
+                      onTapGetValue: (int v) {
+                        // print(v);
+                        // setState(() {
+                        // });
+                      },
+                    ),
                   ],
                 ),
               ],
@@ -90,8 +100,6 @@ class _CartProductItemState extends State<CartProductItem> {
     );
   }
 }
-
-
 
 /*
 class _CartProductItemState extends State<CartProductItem> {

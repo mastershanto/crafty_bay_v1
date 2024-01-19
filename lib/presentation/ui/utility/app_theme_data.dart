@@ -8,8 +8,10 @@ class AppThemeData {
       AppColors.primaryColor.value,
       AppColors.colorSwatch,
     ),
+
     progressIndicatorTheme:
         const ProgressIndicatorThemeData(color: AppColors.primaryColor),
+
     inputDecorationTheme: InputDecorationTheme(
       contentPadding: const EdgeInsets.symmetric(
         horizontal: 16,
@@ -32,6 +34,7 @@ class AppThemeData {
         ),
       ),
     ),
+
     textTheme: TextTheme(
       titleLarge: const TextStyle(
         fontSize: 32,
@@ -42,6 +45,7 @@ class AppThemeData {
           fontWeight: FontWeight.w400,
           color: Colors.grey.shade600),
     ),
+
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
@@ -53,16 +57,19 @@ class AppThemeData {
         foregroundColor: Colors.white,
       ),
     ),
+
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         foregroundColor: AppColors.primaryColor,
       ),
     ),
+
     appBarTheme: const AppBarTheme(
       titleTextStyle: TextStyle(fontSize:18,color: Colors.black),
       foregroundColor:Colors.black,
       backgroundColor: Colors.white,
       elevation: 5,
     ),
+
   );
 }

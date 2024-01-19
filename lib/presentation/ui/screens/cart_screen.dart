@@ -20,27 +20,30 @@ class _CartScreenState extends State<CartScreen> {
       onPopInvoked: (value) {
         Get.find<MainBottomNavController>().backToHome();
       },
-      child: SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              onPressed: () {
-                Get.find<MainBottomNavController>().backToHome();
-              },
-              icon: const Icon(Icons.arrow_back_ios),
+      child: Container(
+        color: AppColors.primaryColor,
+        child: SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              leading: IconButton(
+                onPressed: () {
+                  Get.find<MainBottomNavController>().backToHome();
+                },
+                icon: const Icon(Icons.arrow_back_ios),
+              ),
+              title: const Text("Cart"),
+              // backgroundColor: Colors.grey.shade200,'
             ),
-            title: const Text("Cart"),
-            // backgroundColor: Colors.grey.shade200,'
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                cartProductItemList,
-                const SizedBox(height: 4,),
-                totalPriceAndCheckoutSection,
-              ],
+            body: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  cartProductItemList,
+                  const SizedBox(height: 4,),
+                  totalPriceAndCheckoutSection,
+                ],
+              ),
             ),
           ),
         ),

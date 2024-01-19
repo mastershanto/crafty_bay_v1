@@ -4,6 +4,7 @@ import 'package:crafty_bay_v1/presentation/ui/screens/main_bottom_nav_screen.dar
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../utility/app_colors.dart';
 import '../../widgets/app_logo.dart';
 
 
@@ -30,18 +31,23 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            Spacer(),
-            AppLogo(),
-            Spacer(),
-            CircularProgressIndicator(),
-            SizedBox(height: 16),
-            Text("Version 1.0"),
-            SizedBox(height: 16),
-          ],
+    return Container(
+      color: AppColors.primaryColor,
+      child: const SafeArea(
+        child: Scaffold(
+          body: Center(
+            child: Column(
+              children: [
+                Spacer(),
+                AppLogo(),
+                Spacer(),
+                CircularProgressIndicator(),
+                SizedBox(height: 16),
+                Text("Version 1.0"),
+                SizedBox(height: 16),
+              ],
+            ),
+          ),
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:crafty_bay_v1/presentation/state_holders/main_bottom_nav_controller.dart';
 import 'package:crafty_bay_v1/presentation/ui/screens/product_list_screen.dart';
+import 'package:crafty_bay_v1/presentation/ui/utility/app_colors.dart';
 import 'package:crafty_bay_v1/presentation/ui/utility/assets_path.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,62 +20,65 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: appBar,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              children: [
-                const SizedBox(height: 8),
-                searchTextFormField,
-                const SizedBox(height: 16),
-                const BannerCarouselSlider(
-                  height: 180,
-                ),
-                const SizedBox(height: 16),
-                SectionTitle(
-                  title: "All Categories",
-                  onTapSeeAll: () {
-                    Get.find<MainBottomNavController>().changeIndex(1);
-                  },
-                ),
-                const SizedBox(height: 8),
-                categoryList,
-                const SizedBox(height: 8),
-                SectionTitle(
-                    title: "Popular",
+    return Container(
+      color: AppColors.primaryColor,
+      child: SafeArea(
+        child: Scaffold(
+          appBar: appBar,
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                children: [
+                  const SizedBox(height: 8),
+                  searchTextFormField,
+                  const SizedBox(height: 16),
+                  const BannerCarouselSlider(
+                    height: 180,
+                  ),
+                  const SizedBox(height: 16),
+                  SectionTitle(
+                    title: "All Categories",
+                    onTapSeeAll: () {
+                      Get.find<MainBottomNavController>().changeIndex(1);
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                  categoryList,
+                  const SizedBox(height: 8),
+                  SectionTitle(
+                      title: "Popular",
+                      onTapSeeAll: () {
+                        // Get.find<MainBottomNavController>().changeIndex(3);
+                        Get.to(
+                          ProductListScreen(),
+                        );
+                      }),
+                  productList,
+                  const SizedBox(height: 8),
+                  SectionTitle(
+                    title: "Special",
                     onTapSeeAll: () {
                       // Get.find<MainBottomNavController>().changeIndex(3);
                       Get.to(
-                        ProductListScreen(),
+                        ProductListScreen(category:"Special"),
                       );
-                    }),
-                productList,
-                const SizedBox(height: 8),
-                SectionTitle(
-                  title: "Special",
-                  onTapSeeAll: () {
-                    // Get.find<MainBottomNavController>().changeIndex(3);
-                    Get.to(
-                      ProductListScreen(category:"Special"),
-                    );
-                  },
-                ),
-                productList,
-                const SizedBox(height: 16),
-                SectionTitle(
-                  title: "New",
-                  onTapSeeAll: () {
-                    // Get.find<MainBottomNavController>().changeIndex(3);
-                    Get.to(
-                      ProductListScreen(category:"New"),
-                    );
-                  },
-                ),
-                productList,
-              ],
+                    },
+                  ),
+                  productList,
+                  const SizedBox(height: 16),
+                  SectionTitle(
+                    title: "New",
+                    onTapSeeAll: () {
+                      // Get.find<MainBottomNavController>().changeIndex(3);
+                      Get.to(
+                        ProductListScreen(category:"New"),
+                      );
+                    },
+                  ),
+                  productList,
+                ],
+              ),
             ),
           ),
         ),
