@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import 'controller_binder.dart';
 import 'presentation/ui/screens/auth/splash_screen.dart';
-import 'presentation/ui/utility/app_theme_data.dart';
+import 'presentation/ui/ui_utility/app_theme_data.dart';
 
 class CraftyBay extends StatefulWidget {
   const CraftyBay({super.key});

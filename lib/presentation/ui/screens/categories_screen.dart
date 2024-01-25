@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../state_holders/main_bottom_nav_controller.dart';
-import '../utility/app_colors.dart';
+import '../ui_utility/app_colors.dart';
 import '../widgets/category_item.dart';
 
 class CategoriesScreen extends StatefulWidget {

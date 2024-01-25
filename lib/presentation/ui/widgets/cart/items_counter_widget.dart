@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../utility/app_colors.dart';
+import '../../ui_utility/app_colors.dart';
 
 class ItemsCounterWidget extends StatefulWidget {
-  ItemsCounterWidget(
+   ItemsCounterWidget(
       {super.key,
       required this.initialValue,
       required this.minValue,

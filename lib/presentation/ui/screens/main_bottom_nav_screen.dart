@@ -6,7 +6,7 @@ import 'package:crafty_bay_v1/presentation/ui/screens/wishlist_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../utility/app_colors.dart';
+import '../ui_utility/app_colors.dart';
 
 class MainBottomNavScreen extends StatefulWidget {
   const MainBottomNavScreen({super.key});

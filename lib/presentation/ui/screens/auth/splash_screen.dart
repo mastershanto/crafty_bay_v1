@@ -1,11 +1,13 @@
 
 
-import 'package:crafty_bay_v1/presentation/ui/screens/main_bottom_nav_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../utility/app_colors.dart';
+import '../../ui_utility/app_colors.dart';
 import '../../widgets/app_logo.dart';
+// import '../main_bottom_nav_screen.dart';
+import 'verify_email_screen.dart';
 
 
 class SplashScreen extends StatefulWidget {
@@ -19,8 +21,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> moveToNextScreen() async {
     await Future.delayed(const Duration(seconds: 2));
-    // Get.offAll(const VerifyEmailScreen());
-    Get.offAll(const MainBottomNavScreen());
+    Get.offAll(const VerifyEmailScreen());
+    // Get.offAll(const MainBottomNavScreen());
   }
 
   @override

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 // import 'package:item_count_number_button/item_count_number_button.dart';
 
-import '../../utility/app_colors.dart';
-import '../../utility/assets_path.dart';
+import '../../ui_utility/app_colors.dart';
+import '../../ui_utility/assets_path.dart';
 import 'items_counter_widget.dart';
 
 class CartProductItem extends StatefulWidget {

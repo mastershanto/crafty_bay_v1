@@ -1,5 +1,5 @@
 
-import 'package:crafty_bay_v1/presentation/ui/utility/app_colors.dart';
+import 'package:crafty_bay_v1/presentation/ui/ui_utility/app_colors.dart';
 import 'package:crafty_bay_v1/presentation/ui/widgets/product_card_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

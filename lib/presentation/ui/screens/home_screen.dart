@@ -1,7 +1,7 @@
 import 'package:crafty_bay_v1/presentation/state_holders/main_bottom_nav_controller.dart';
 import 'package:crafty_bay_v1/presentation/ui/screens/product_list_screen.dart';
-import 'package:crafty_bay_v1/presentation/ui/utility/app_colors.dart';
-import 'package:crafty_bay_v1/presentation/ui/utility/assets_path.dart';
+import 'package:crafty_bay_v1/presentation/ui/ui_utility/app_colors.dart';
+import 'package:crafty_bay_v1/presentation/ui/ui_utility/assets_path.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../widgets/category_item.dart';
