@@ -1,3 +1,6 @@
+///isCodingWorkCompleted? => "yes, completed";
+library;
+
 
 class AssetsPath {
 

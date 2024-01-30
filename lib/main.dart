@@ -1,7 +1,11 @@
+///todo: isCodingWorkCompleted?=>"no, work in progress!";
+library;
+
 import 'package:flutter/material.dart';
 import 'app.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const CraftyBay());
 }
 

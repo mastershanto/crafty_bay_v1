@@ -1,3 +1,6 @@
+///todo: isCodingWorkCompleted?=>"no, work in progress!";
+library;
+
 class Urls {
   static const String _baseUrl = "https://craftybay.teamrabbil.com/api";
 

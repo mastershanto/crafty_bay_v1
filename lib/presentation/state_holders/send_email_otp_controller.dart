@@ -1,3 +1,7 @@
+///isCodingWorkCompleted? => "yes, completed";
+library;
+
+
 import 'package:crafty_bay_v1/data/services/network_caller.dart';
 import 'package:get/get.dart';
 

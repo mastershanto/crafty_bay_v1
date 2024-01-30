@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+///todo: isCodingWorkCompleted?=>"No, work in progress";
+library;
 
+import 'package:flutter/material.dart';
 import '../widgets/product_card_item.dart';
 
 class ProductListScreen extends StatefulWidget {

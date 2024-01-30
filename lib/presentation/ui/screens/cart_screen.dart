@@ -1,3 +1,6 @@
+///todo: isCodingWorkCompleted?=>"No, work in progress";
+library;
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../state_holders/main_bottom_nav_controller.dart';

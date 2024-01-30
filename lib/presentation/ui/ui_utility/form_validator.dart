@@ -1,3 +1,6 @@
+///isCodingWorkCompleted? => "yes, completed";
+library;
+
 class FormValidator {
   static String? emailValidator(String? value) {
     const validEmailPattern =
@@ -17,16 +20,16 @@ class FormValidator {
     }
   }
 
-  static String? inputValidator(String? value,{failedMessage}) {
+  static String? inputValidator(String? value,{errorMessage}) {
     if (value?.trim().isEmpty ?? true) {
-      return failedMessage?? "Please, enter the valid inputs.";
+      return errorMessage?? "Please, enter the valid inputs.";
     }
     return null;
   }
 
-  static String? phoneNumberValidator(String? value) {
+  static String? phoneNumberValidator(String? value,{errorMessage}) {
     if (value?.trim().isEmpty ?? true) {
-      return "Please, enter the valid inputs.";
+      return errorMessage?? "Please, enter the valid inputs.";
     }
     if (value!.length > 11) {
       return "Phone number must have 11 digit";

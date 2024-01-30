@@ -1,7 +1,9 @@
+///todo: isCodingWorkCompleted?=>"no, work in progress!";
+library;
+
 import 'package:crafty_bay_v1/presentation/ui/screens/product_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../ui_utility/app_colors.dart';
 
 class CategoryItem extends StatelessWidget {

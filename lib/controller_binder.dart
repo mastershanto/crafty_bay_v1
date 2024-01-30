@@ -1,4 +1,8 @@
-import 'package:crafty_bay_v1/presentation/state_holders/verify_otp_controller.dart';
+///todo: isCodingWorkCompleted?=>"no, work in progress!";
+library;
+
+import 'presentation/state_holders/auth_controller.dart';
+import 'presentation/state_holders/verify_otp_controller.dart';
 import 'package:get/get.dart';
 
 import 'presentation/state_holders/main_bottom_nav_controller.dart';
@@ -11,6 +15,8 @@ class ControllerBinder extends Bindings {
     Get.put(MainBottomNavController(),);
     Get.put(SendEmailOtpController(),);
     Get.put(VerifyOtpController(),);
+    Get.put(AuthController(),);
+
   }
 
 }

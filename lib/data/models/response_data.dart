@@ -1,3 +1,6 @@
+///isCodingWorkCompleted? => "yes, completed";
+library;
+
 class ResponseData {
   final bool isSuccess;
   final int statusCode;

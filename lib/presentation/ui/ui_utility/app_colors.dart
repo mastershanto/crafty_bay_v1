@@ -1,3 +1,5 @@
+//isCodingWorkCompleted? => "yes, completed";
+
 import 'package:flutter/material.dart';
 
 class AppColors {

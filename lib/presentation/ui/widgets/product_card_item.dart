@@ -1,3 +1,6 @@
+///todo: isCodingWorkCompleted? => "No, work in progress";
+library;
+
 import 'package:crafty_bay_v1/presentation/ui/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

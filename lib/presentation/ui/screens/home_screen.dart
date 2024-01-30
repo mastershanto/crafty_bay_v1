@@ -1,3 +1,6 @@
+///todo: isCodingWorkCompleted?=>"No, work in progress";
+library;
+
 import 'package:crafty_bay_v1/presentation/state_holders/main_bottom_nav_controller.dart';
 import 'package:crafty_bay_v1/presentation/ui/screens/product_list_screen.dart';
 import 'package:crafty_bay_v1/presentation/ui/ui_utility/app_colors.dart';

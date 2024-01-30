@@ -1,3 +1,6 @@
+///isCodingWorkCompleted? => "yes, completed";
+library;
+
 import 'package:flutter/material.dart';
 
 class CircleIconButton extends StatelessWidget {

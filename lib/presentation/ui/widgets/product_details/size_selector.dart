@@ -1,3 +1,6 @@
+///todo: isCodingWorkCompleted?=>"no, work in progress!";
+library;
+
 import 'package:flutter/material.dart';
 
 import '../../ui_utility/app_colors.dart';

@@ -1,5 +1,8 @@
+///todo: isCodingWorkCompleted?=>"no, work in progress!";
+library;
 
 import 'package:crafty_bay_v1/presentation/state_holders/verify_otp_controller.dart';
+import 'package:crafty_bay_v1/presentation/ui/screens/main_bottom_nav_screen.dart';
 import 'package:crafty_bay_v1/presentation/ui/ui_utility/form_validator.dart';
 import 'package:crafty_bay_v1/presentation/ui/widgets/center_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +11,6 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import '../../ui_utility/app_colors.dart';
 import '../../widgets/app_logo.dart';
 import 'complete_profile_screen.dart';
-
 
 class VerifyOtpScreen extends StatefulWidget {
   const VerifyOtpScreen({super.key, required this.email});
@@ -20,7 +22,6 @@ class VerifyOtpScreen extends StatefulWidget {
 }
 
 class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
-
   final TextEditingController _otpTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -43,53 +44,25 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                     ),
                     const SizedBox(height: 24),
                     Text(
-                      "Welcome Back",
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .titleLarge,
+                      "Enter OTP Code",
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 4),
                     Text(
-                      "Please, enter your email address.",
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .bodySmall,
+                      "A 4 digit OTP code has been  sent",
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                     const SizedBox(
-                      height: 16,
+                      height: 24,
                     ),
-                    customPinCodeTextField(context, otp: _otpTEController,),
-                    const SizedBox(height: 24),
-                    SizedBox(
-                      width: double.infinity,
-                      child: GetBuilder<VerifyOtpController>(
-                          builder: (controller) {
-                            return Visibility(
-                              visible: controller.inProgress==false,
-                              replacement: const CenterCircularProgressIndicator(),
-                              child: ElevatedButton(
-                                onPressed: () async {
-                                  if (_formKey.currentState!.validate()) {
-                                    final bool result = await controller.verifyOtp(
-                                        widget.email, _otpTEController.text.trim(),);
-
-                                    if (result) {
-                                      Get.offAll(
-                                        const CompleteProfileScreen(),
-                                      );
-                                    }
-                                  }
-                                },
-                                child: const Text("Next"),
-                              ),
-                            );
-                          }
-                      ),
+                    customPinCodeTextField(
+                      context,
+                      otp: _otpTEController,
                     ),
                     const SizedBox(height: 24),
-                    customExpireTime,
+                    otpSubmitButton(),
+                    const SizedBox(height: 24),
+                    otpExpireTime,
                   ],
                 ),
               ),
@@ -100,7 +73,49 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
     );
   }
 
-  RichText get customExpireTime {
+  SizedBox otpSubmitButton() {
+    return SizedBox(
+                    width: double.infinity,
+                    child: GetBuilder<VerifyOtpController>(
+                        builder: (verifyOtpController) {
+                      return Visibility(
+                        visible: verifyOtpController.inProgress == false,
+                        replacement: const CenterCircularProgressIndicator(),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              final bool response = await verifyOtpController.verifyOtp(
+                                widget.email,
+                                _otpTEController.text.trim(),
+                              );
+
+                              if (response) {
+                                if (verifyOtpController
+                                    .shouldNavigateCompleteProfile) {
+                                  Get.offAll(()=>
+                                    const CompleteProfileScreen(),
+                                  );
+                                }else{
+                                  Get.offAll(()=>const MainBottomNavScreen());
+                                }
+                              } else {
+                                Get.showSnackbar(GetSnackBar(
+                                  title: "OTP verification failed",
+                                  message: verifyOtpController.errorMessage,
+                                  duration: const Duration(seconds: 2),
+                                  isDismissible: true,
+                                ));
+                              }
+                            }
+                          },
+                          child: const Text("Next"),
+                        ),
+                      );
+                    }),
+                  );
+  }
+
+  RichText get otpExpireTime {
     return RichText(
       text: const TextSpan(
           style: TextStyle(
@@ -110,20 +125,22 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
             TextSpan(text: "This code will expire"),
             TextSpan(
                 style: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontWeight: FontWeight.w600),
+                    color: AppColors.primaryColor, fontWeight: FontWeight.w600),
                 text: "120s"),
           ]),
     );
   }
 
-  PinCodeTextField customPinCodeTextField(BuildContext context, {required otp}) {
+  PinCodeTextField customPinCodeTextField(BuildContext context,
+      {required otp}) {
     return PinCodeTextField(
       controller: otp,
-      validator: (value)=>FormValidator.inputValidator(value, failedMessage: "Input your 4 digit Otp"),
+      validator: (value) => FormValidator.inputValidator(value,
+          errorMessage: "Input your 4 digit Otp"),
       length: 4,
       obscureText: false,
       animationType: AnimationType.fade,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       pinTheme: PinTheme(
           shape: PinCodeFieldShape.box,
           borderRadius: BorderRadius.circular(5),
@@ -140,13 +157,13 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
       onCompleted: (v) {
         print("Completed");
       },
-      onChanged: (value) {
-        // print(value);
-      },
-      beforeTextPaste: (text) {
-        // print("Allowing to paste $text");
-        return true;
-      },
+      // onChanged: (value) {
+      //   // print(value);
+      // },
+      // beforeTextPaste: (text) {
+      //   // print("Allowing to paste $text");
+      //   return true;
+      // },
       appContext: context,
     );
   }
@@ -157,7 +174,5 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
 
     _otpTEController.dispose();
     super.dispose();
-
-
   }
 }

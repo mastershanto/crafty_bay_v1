@@ -1,3 +1,6 @@
+///isCodingWorkCompleted?=>"yes, completed";
+library;
+
 import 'package:crafty_bay_v1/presentation/ui/ui_utility/form_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
