@@ -103,21 +103,13 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       textInputAction: TextInputAction.next,
                     ),
                     const SizedBox(height: 8),
-                    GetBuilder<CompleteProfileController>(
-                      builder: (controller) {
-                        return Visibility(
-                          visible: controller.inProgress==false,
-                          replacement: const CenterCircularProgressIndicator(),
-                          child: SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                  onPressed: () {
-                                    Get.offAll(const MainBottomNavScreen());
-                                  },
-                                  child: const Text("Completed"))),
-                        );
-                      }
-                    ),
+                    SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Get.offAll(const MainBottomNavScreen());
+                            },
+                            child: const Text("Completed"))),
                   ],
                 ),
               ),

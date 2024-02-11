@@ -1,5 +1,7 @@
-///isCodingWorkCompleted? => "yes, completed";
+///todo: isCodingWorkCompleted? => "no, have some problem";
 library;
+
+
 
 import 'package:crafty_bay_v1/data/models/response_data.dart';
 import 'package:crafty_bay_v1/data/services/network_caller.dart';
@@ -15,11 +17,9 @@ class VerifyOtpController extends GetxController {
   String _errorMessage="";
   String get errorMessage=>_errorMessage;
 
-  bool _shouldNavigateCompleteProfile = true;
-  bool get shouldNavigateCompleteProfile => _shouldNavigateCompleteProfile;
+  bool _shouldNavigateToCompleteProfile=true;
+  bool get shouldNavigateToCompleteProfile=>_shouldNavigateToCompleteProfile;
 
-  String _token="";
-  String get token=>_token;
 
   Future<bool> verifyOtp(String email, String otp) async {
     _inProgress = true;
@@ -27,18 +27,17 @@ class VerifyOtpController extends GetxController {
 
     final ResponseData response =
         await NetworkCaller().getRequest(Urls.verifyOtp(email, otp));
-
     _inProgress = false;
+
     if (response.isSuccess) {
-       _token = response.responseData["data"];
 
+      final token=response.responseData["data"];
       await Future.delayed(const Duration(seconds: 3),);
-
-      final bool result=await Get.find<ReadProfileDataController>().readProfileData(token);
-
+      final bool result= await Get.find<ReadProfileDataController>().readProfileData(token);
       if(result){
-        _shouldNavigateCompleteProfile=Get.find<ReadProfileDataController>().isProfileCompleted==false;
-        if(_shouldNavigateCompleteProfile==false){
+        _shouldNavigateToCompleteProfile= await Get.find<ReadProfileDataController>().isProfileCompleted==false;
+
+        if(_shouldNavigateToCompleteProfile){
           await Get.find<AuthController>().saveUserDetails(token, Get.find<ReadProfileDataController>().profile);
         }
 
@@ -47,6 +46,9 @@ class VerifyOtpController extends GetxController {
         update();
         return false;
       }
+
+
+      //todo: save to local cache
 
       update();
       return true;

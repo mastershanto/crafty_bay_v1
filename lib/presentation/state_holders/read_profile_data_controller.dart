@@ -1,5 +1,6 @@
-///todo: isCodingWorkCompleted?=>"no, work in progress!";
+///todo: isCodingWorkCompleted?=>"no, have some problem!";
 library;
+
 
 import 'package:crafty_bay_v1/data/models/response_data.dart';
 import 'package:crafty_bay_v1/data/services/network_caller.dart';
@@ -17,30 +18,31 @@ class ReadProfileDataController extends GetxController {
 
   String get errorMessage => _errorMessage;
 
-  Profile _profile = Profile();
+  Profile _profile=Profile();
+  Profile get profile=>_profile;
 
-  Profile get profile => _profile;
+  bool _isProfileCompleted=false;
+  bool get isProfileCompleted=>_isProfileCompleted;
 
-  bool _isProfileCompleted = false;
-
-  bool get isProfileCompleted => _isProfileCompleted;
 
   Future<bool> readProfileData(String token) async {
     _inProgress = true;
-    update();
 
     final ResponseData response =
         await NetworkCaller().getRequest(Urls.readProfile, token: token);
 
     _inProgress = false;
     if (response.isSuccess) {
-      final profileData = response.responseData["data"];
-      if (profileData.isEmpty) {
-        _isProfileCompleted = false;
-      } else {
-        _profile = Profile.fromJson(profileData[0]);
-        _isProfileCompleted = true;
-      }
+        final profileData=response.responseData["data"];
+        if(profileData.isEmpty){
+          _isProfileCompleted=false;
+
+        }else{
+          _profile=Profile.fromJson(profileData[0]);
+          _isProfileCompleted=true;
+
+          //todo: save profile data;
+        }
       update();
       return true;
     } else {

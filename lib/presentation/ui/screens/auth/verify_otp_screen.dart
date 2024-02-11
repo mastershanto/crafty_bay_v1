@@ -55,10 +55,44 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                     const SizedBox(
                       height: 24,
                     ),
-                    customPinCodeTextField(
-                      context,
-                      otp: _otpTEController,
+                    PinCodeTextField(
+                      // controller: otp,
+                      controller: _otpTEController,
+                      validator: (value) => FormValidator.inputValidator(value,
+                          errorMessage: "Input your 4 digit Otp"),
+                      length: 4,
+                      obscureText: false,
+                      animationType: AnimationType.fade,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      pinTheme: PinTheme(
+                          shape: PinCodeFieldShape.box,
+                          borderRadius: BorderRadius.circular(5),
+                          fieldHeight: 50,
+                          fieldWidth: 40,
+                          activeFillColor: Colors.transparent,
+                          inactiveFillColor: Colors.transparent,
+                          inactiveColor: AppColors.primaryColor,
+                          selectedFillColor: Colors.transparent,
+                          selectedColor: Colors.purple),
+                      animationDuration: const Duration(milliseconds: 300),
+                      backgroundColor: Colors.transparent,
+                      enableActiveFill: true,
+                      onCompleted: (v) {
+                        // print("Completed");
+                      },
+                      // onChanged: (value) {
+                      //   // print(value);
+                      // },
+                      // beforeTextPaste: (text) {
+                      //   // print("Allowing to paste $text");
+                      //   return true;
+                      // },
+                      appContext: context,
                     ),
+                    // customPinCodeTextField(
+                    //   context,
+                    //   otp: _otpTEController,
+                    // ),
                     const SizedBox(height: 24),
                     otpSubmitButton(),
                     const SizedBox(height: 24),
@@ -90,14 +124,17 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                               );
 
                               if (response) {
-                                if (verifyOtpController
-                                    .shouldNavigateCompleteProfile) {
+                                if(verifyOtpController.shouldNavigateToCompleteProfile){
                                   Get.offAll(()=>
-                                    const CompleteProfileScreen(),
+                                  const CompleteProfileScreen(),
                                   );
                                 }else{
-                                  Get.offAll(()=>const MainBottomNavScreen());
+                                  Get.offAll(()=>
+                                  const MainBottomNavScreen(),
+                                  );
                                 }
+
+
                               } else {
                                 Get.showSnackbar(GetSnackBar(
                                   title: "OTP verification failed",
@@ -131,42 +168,42 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
     );
   }
 
-  PinCodeTextField customPinCodeTextField(BuildContext context,
-      {required otp}) {
-    return PinCodeTextField(
-      controller: otp,
-      validator: (value) => FormValidator.inputValidator(value,
-          errorMessage: "Input your 4 digit Otp"),
-      length: 4,
-      obscureText: false,
-      animationType: AnimationType.fade,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      pinTheme: PinTheme(
-          shape: PinCodeFieldShape.box,
-          borderRadius: BorderRadius.circular(5),
-          fieldHeight: 50,
-          fieldWidth: 40,
-          activeFillColor: Colors.transparent,
-          inactiveFillColor: Colors.transparent,
-          inactiveColor: AppColors.primaryColor,
-          selectedFillColor: Colors.transparent,
-          selectedColor: Colors.purple),
-      animationDuration: const Duration(milliseconds: 300),
-      backgroundColor: Colors.transparent,
-      enableActiveFill: true,
-      onCompleted: (v) {
-        print("Completed");
-      },
-      // onChanged: (value) {
-      //   // print(value);
-      // },
-      // beforeTextPaste: (text) {
-      //   // print("Allowing to paste $text");
-      //   return true;
-      // },
-      appContext: context,
-    );
-  }
+  // PinCodeTextField customPinCodeTextField(BuildContext context,
+  //     {required otp}) {
+  //   return PinCodeTextField(
+  //     controller: otp,
+  //     validator: (value) => FormValidator.inputValidator(value,
+  //         errorMessage: "Input your 4 digit Otp"),
+  //     length: 4,
+  //     obscureText: false,
+  //     animationType: AnimationType.fade,
+  //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //     pinTheme: PinTheme(
+  //         shape: PinCodeFieldShape.box,
+  //         borderRadius: BorderRadius.circular(5),
+  //         fieldHeight: 50,
+  //         fieldWidth: 40,
+  //         activeFillColor: Colors.transparent,
+  //         inactiveFillColor: Colors.transparent,
+  //         inactiveColor: AppColors.primaryColor,
+  //         selectedFillColor: Colors.transparent,
+  //         selectedColor: Colors.purple),
+  //     animationDuration: const Duration(milliseconds: 300),
+  //     backgroundColor: Colors.transparent,
+  //     enableActiveFill: true,
+  //     onCompleted: (v) {
+  //       print("Completed");
+  //     },
+  //     // onChanged: (value) {
+  //     //   // print(value);
+  //     // },
+  //     // beforeTextPaste: (text) {
+  //     //   // print("Allowing to paste $text");
+  //     //   return true;
+  //     // },
+  //     appContext: context,
+  //   );
+  // }
 
   @override
   void dispose() {

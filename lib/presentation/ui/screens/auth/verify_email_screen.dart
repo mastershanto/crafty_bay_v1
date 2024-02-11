@@ -57,18 +57,19 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                       decoration: const InputDecoration(hintText: "Email"),
                     ),
                     const SizedBox(height: 8),
-                    GetBuilder<SendEmailOtpController>(builder: (controller) {
+                    GetBuilder<SendEmailOtpController>(
+                        builder: (sendEmailOtpController) {
                       return SizedBox(
                         width: double.infinity,
                         child: Visibility(
-                          visible: controller.inProgress == false,
+                          visible: sendEmailOtpController.inProgress == false,
                           replacement:
                               const Center(child: CircularProgressIndicator()),
                           child: ElevatedButton(
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 final bool result =
-                                    await controller.sendOtpToEmail(
+                                    await sendEmailOtpController.sendOtpToEmail(
                                         _emailTEController.text.trim());
                                 if (result) {
                                   Get.to(
@@ -79,8 +80,8 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                                 } else {
                                   Get.showSnackbar(
                                     GetSnackBar(
-                                      title: "Email verification fail!",
-                                      message: controller.errorMessage,
+                                      title: "Send OTP failed!",
+                                      message: sendEmailOtpController.errorMessage,
                                     ),
                                   );
                                 }
