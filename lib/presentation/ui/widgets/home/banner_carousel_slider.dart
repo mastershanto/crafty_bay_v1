@@ -2,14 +2,18 @@
 library;
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:crafty_bay_v1/data/models/banner_item.dart';
 import 'package:flutter/material.dart';
 
 import '../../ui_utility/app_colors.dart';
 
 class BannerCarouselSlider extends StatefulWidget {
-  const BannerCarouselSlider({super.key, this.height});
+  const BannerCarouselSlider({
+    super.key, this.height, required this.bannerList,
+  });
 
   final double? height;
+  final List<BannerItem> bannerList;
 
   @override
   State<BannerCarouselSlider> createState() => _BannerCarouselSliderState();
@@ -28,60 +32,83 @@ class _BannerCarouselSliderState extends State<BannerCarouselSlider> {
             onPageChanged: (index, reason) {
               _currentIndex.value = index;
             },
-            // viewportFraction: 1,
-            viewportFraction: 3,
-            // autoPlay: true,
+            viewportFraction: 1,
             // enableInfiniteScroll: false,
+            // autoPlay: true,
           ),
-          items: [1, 2, 3, 4, 5].map((i) {
+          items: widget.bannerList.map((banner) {
             return Builder(
               builder: (BuildContext context) {
-                return Container(
-                  width: MediaQuery.of(context).size.width,
-                  margin: const EdgeInsets.symmetric(horizontal: 1.0),
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    'text $i',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge
-                        ?.copyWith(color: Colors.white),
-                  ),
+                return Stack(
+                  children: [
+                    // TODO: make it horizontal alignment
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: const EdgeInsets.symmetric(horizontal: 1.0),
+                      decoration: BoxDecoration(
+                          color: AppColors.primaryColor,
+                          borderRadius: BorderRadius.circular(8),
+                          image: DecorationImage(
+                              image: NetworkImage(banner.image ?? '')
+                          )
+                      ),
+                      alignment: Alignment.center,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 100,
+                            child: Text(banner.title ?? '', style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),),
+                          ),
+                          const SizedBox(height: 8,),
+                          SizedBox(
+                            width: 100,
+                            child: Text(banner.shortDes ?? '', style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                            ),),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 );
               },
             );
           }).toList(),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: 6,),
         ValueListenableBuilder(
             valueListenable: _currentIndex,
             builder: (context, index, _) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  for (int i = 0; i < 5; i++)
+                  for (int i = 0; i < widget.bannerList.length; i++)
                     Container(
                       height: 12,
                       width: 12,
                       margin: const EdgeInsets.all(2),
                       decoration: BoxDecoration(
-                        color: i == index
-                            ? AppColors.primaryColor
-                            : Colors.transparent,
-                        border: Border.all(
-                          color:
-                              i == index ? AppColors.primaryColor : Colors.grey,
-                        ),
-                        borderRadius: BorderRadius.circular(30),
+                          color: i == index ? AppColors.primaryColor : Colors.transparent,
+                          border: Border.all(
+                            color: i == index ? AppColors.primaryColor : Colors.grey.shade400,
+                          ),
+                          borderRadius: BorderRadius.circular(30)
                       ),
                     ),
                 ],
               );
-            }),
+            }
+        )
       ],
     );
   }

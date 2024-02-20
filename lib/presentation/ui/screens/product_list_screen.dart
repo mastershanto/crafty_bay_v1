@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import '../widgets/product_card_item.dart';
 
 class ProductListScreen extends StatefulWidget {
-  ProductListScreen({super.key, this.category});
+  ProductListScreen({super.key, this.category, this.categoryId});
 
    String? category;
+  final int? categoryId;
 
   @override
   State<ProductListScreen> createState() => _ProductListScreenState();
@@ -35,7 +36,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
             mainAxisSpacing: 2,
           ),
           itemBuilder: (context, index) {
-            return const ProductCardItem();
+            // return const ProductCardItem(product: null,);
           },
         ),
       ),

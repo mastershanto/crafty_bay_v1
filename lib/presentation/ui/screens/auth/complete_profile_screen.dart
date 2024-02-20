@@ -2,12 +2,14 @@
 library;
 
 import 'package:crafty_bay_v1/presentation/state_holders/complete_profile_controller.dart';
+import 'package:crafty_bay_v1/presentation/state_holders/verify_otp_controller.dart';
 import 'package:crafty_bay_v1/presentation/ui/screens/main_bottom_nav_screen.dart';
 import 'package:crafty_bay_v1/presentation/ui/ui_utility/form_validator.dart';
 import 'package:crafty_bay_v1/presentation/ui/widgets/center_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../data/models/create_profile_params.dart';
 import '../../ui_utility/app_colors.dart';
 import '../../widgets/app_logo.dart';
 
@@ -105,11 +107,49 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     const SizedBox(height: 8),
                     SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton(
-                            onPressed: () {
-                              Get.offAll(const MainBottomNavScreen());
-                            },
-                            child: const Text("Completed"))),
+                      child: GetBuilder<CompleteProfileController>(
+                          builder: (completeProfileController) {
+                            return Visibility(
+                              visible: completeProfileController.inProgress == false,
+                              replacement: const CenterCircularProgressIndicator(),
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    final createProfileParams = CreateProfileParams(
+                                      firstName:
+                                      _firstNameTEController.text.trim(),
+                                      lastName:
+                                      _lastNameTEController.text.trim(),
+                                      mobile: _mobileTEController.text.trim(),
+                                      city: _cityTEController.text.trim(),
+                                      shippingAddress:
+                                      _shippingAddressTEController.text
+                                          .trim(),
+                                    );
+                                    final bool result =
+                                    await completeProfileController
+                                        .createProfileData(
+                                        Get.find<VerifyOtpController>().token,
+                                        createProfileParams
+                                    );
+                                    if (result) {
+                                      Get.offAll(() => const MainBottomNavScreen());
+                                    } else {
+                                      Get.showSnackbar(GetSnackBar(
+                                        title: 'Complete profile failed',
+                                        message: completeProfileController.errorMessage,
+                                        duration: const Duration(seconds: 2),
+                                        isDismissible: true,
+                                      ));
+                                    }
+                                  }
+                                },
+                                child: const Text('Complete'),
+                              ),
+                            );
+                          }
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -119,4 +159,14 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       ),
     );
   }
+
+    @override
+  void dispose(){
+    super.dispose();
+    _firstNameTEController.clear();
+    _lastNameTEController.clear();
+    _mobileTEController.clear();
+    _cityTEController.clear();
+    _shippingAddressTEController.clear();
+    }
 }

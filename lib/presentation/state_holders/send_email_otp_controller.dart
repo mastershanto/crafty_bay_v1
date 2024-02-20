@@ -22,7 +22,7 @@ class SendEmailOtpController extends GetxController {
     update();
 
     final ResponseData response = await NetworkCaller().getRequest(
-      Urls.sendEmailOtp(email),
+      Urls.sentEmailOtp(email),
     );
 
     _inProgress = false;

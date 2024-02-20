@@ -1,9 +1,14 @@
 ///todo: isCodingWorkCompleted?=>"No, work in progress";
 library;
 
+import 'package:crafty_bay_v1/presentation/state_holders/category_controller.dart';
+import 'package:crafty_bay_v1/presentation/state_holders/home_banner_controller.dart';
 import 'package:crafty_bay_v1/presentation/state_holders/main_bottom_nav_controller.dart';
+import 'package:crafty_bay_v1/presentation/state_holders/new_product_controller.dart';
+import 'package:crafty_bay_v1/presentation/state_holders/popular_product_controller.dart';
+import 'package:crafty_bay_v1/presentation/state_holders/special_product_controller.dart';
 import 'package:crafty_bay_v1/presentation/ui/screens/cart_screen.dart';
-import 'package:crafty_bay_v1/presentation/ui/screens/categories_screen.dart';
+import 'package:crafty_bay_v1/presentation/ui/screens/category_screen.dart';
 import 'package:crafty_bay_v1/presentation/ui/screens/home_screen.dart';
 import 'package:crafty_bay_v1/presentation/ui/screens/wishlist_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +25,19 @@ class MainBottomNavScreen extends StatefulWidget {
 
 class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
 
+  @override
+  void initState() {
+    super.initState();
+    Get.find<HomeBannerController>().getBannerList();
+    Get.find<CategoryController>().getCategoryList();
+    Get.find<PopularProductController>().getPopularProductList();
+    Get.find<SpecialProductController>().getSpecialProductList();
+    Get.find<NewProductController>().getNewProductList();
+  }
 
   final List<Widget> _screens=const[
     HomeScreen(),
-    CategoriesScreen(),
+    CategoryScreen(),
     CartScreen(),
     WishlistScreen(),
   ];
