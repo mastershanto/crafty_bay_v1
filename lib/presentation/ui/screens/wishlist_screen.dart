@@ -2,11 +2,11 @@
 library;
 
 import 'package:crafty_bay_v1/presentation/ui/ui_utility/app_colors.dart';
-import 'package:crafty_bay_v1/presentation/ui/widgets/product_card_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../state_holders/main_bottom_nav_controller.dart';
+import '../widgets/product_card_item.dart';
 
 class WishlistScreen extends StatefulWidget {
   const WishlistScreen({super.key});
@@ -50,7 +50,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                   mainAxisSpacing: 2,
                 ),
                 itemBuilder: (context, index) {
-                  // return const ProductCardItem();
+                  // return ProductCardItem(product:,);
                 },
               ),
             ),

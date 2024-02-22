@@ -20,7 +20,7 @@ class ProductCardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.to(() => ProductDetailsScreen(/*productId: product.id!,*/));
+        Get.to(() => ProductDetailsScreen(productId: product.id!,));
       },
       borderRadius: BorderRadius.circular(16),
       child: SizedBox(

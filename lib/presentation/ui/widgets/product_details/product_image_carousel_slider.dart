@@ -7,9 +7,10 @@ import 'package:flutter/material.dart';
 import '../../ui_utility/app_colors.dart';
 
 class ProductImageCarouselSlider extends StatefulWidget {
-  const ProductImageCarouselSlider({super.key, this.height});
+  const ProductImageCarouselSlider({super.key, this.height, required this.urls});
 
   final double? height;
+  final List<String> urls;
 
   @override
   State<ProductImageCarouselSlider> createState() => _ProductImageCarouselSliderState();
@@ -35,7 +36,7 @@ class _ProductImageCarouselSliderState extends State<ProductImageCarouselSlider>
                 // autoPlay: true,
                 // enableInfiniteScroll: false,
               ),
-              items: [1, 2, 3, 4, 5].map((i) {
+              items: widget.urls.map((url) {
                 return Builder(
                   builder: (BuildContext context) {
                     return Container(
@@ -44,15 +45,11 @@ class _ProductImageCarouselSliderState extends State<ProductImageCarouselSlider>
                       decoration: BoxDecoration(
                         color: Colors.grey.shade400,
                         borderRadius: BorderRadius.circular(8),
+                        image: DecorationImage(
+                          image: NetworkImage(url)
+                        ),
                       ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'text $i',
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge
-                            ?.copyWith(color: Colors.white),
-                      ),
+
                     );
                   },
                 );
@@ -69,7 +66,7 @@ class _ProductImageCarouselSliderState extends State<ProductImageCarouselSlider>
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        for (int i = 0; i < 5; i++)
+                        for (int i = 0; i < widget.urls.length; i++)
                           Container(
                             height: 12,
                             width: 12,

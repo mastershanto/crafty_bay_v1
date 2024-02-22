@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SectionTitle(
                 title: 'Popular',
                 onTapSeeAll: () {
-                  Get.to(() => ProductListScreen());
+                  Get.to(() => const ProductListScreen());
                 },
               ),
               GetBuilder<PopularProductController>(

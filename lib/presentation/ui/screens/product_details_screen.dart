@@ -1,16 +1,22 @@
 ///todo: isCodingWorkCompleted?=>"No, work in progress";
 library;
 
+import 'package:crafty_bay_v1/data/models/product_details_data.dart';
+import 'package:crafty_bay_v1/presentation/state_holders/product_details_controller.dart';
 import 'package:crafty_bay_v1/presentation/ui/ui_utility/app_colors.dart';
 import 'package:crafty_bay_v1/presentation/ui/widgets/cart/items_counter_widget.dart';
+import 'package:crafty_bay_v1/presentation/ui/widgets/center_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../widgets/product_details/color_selector.dart';
 import '../widgets/product_details/product_image_carousel_slider.dart';
 import '../widgets/product_details/size_selector.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  const ProductDetailsScreen({super.key});
+  const ProductDetailsScreen({super.key, required this.productId});
+
+  final int productId;
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
@@ -36,7 +42,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   ];
 
   Color _selectedColor = Colors.purple;
-  String _selectedSize = "M";
+  String? _selectedSize;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Get.find<ProductDetailsController>().getProductDetails(widget.productId);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,40 +60,60 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           appBar: AppBar(
             title: const Text("Product Details Page"),
           ),
-          body: SizedBox(
-            child: Column(
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Column(
-                      children: [
-                        const ProductImageCarouselSlider(),
-                        productDetailsBody,
-                      ],
+          body: GetBuilder<ProductDetailsController>(
+              builder: (productDetailsController) {
+            return Visibility(
+              visible: productDetailsController.inProgress == false,
+              replacement: const CenterCircularProgressIndicator(),
+              child: SizedBox(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                          children: [
+                            ProductImageCarouselSlider(
+                              urls: [
+                                productDetailsController.productDetails.img1 ??
+                                    "",
+                                productDetailsController.productDetails.img2 ??
+                                    "",
+                                productDetailsController.productDetails.img3 ??
+                                    "",
+                                productDetailsController.productDetails.img4 ??
+                                    "",
+                              ],
+                            ),
+                            productDetailsBody(
+                                productDetailsController.productDetails),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
+                    priceAndAddToCartSection,
+                  ],
                 ),
-                priceAndAddToCartSection,
-              ],
-            ),
-          ),
+              ),
+            );
+          }),
         ),
       ),
     );
   }
 
-  Padding get productDetailsBody {
+  Padding productDetailsBody(ProductDetailsData productDetails) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: Text(
-                  "Nike Sport Shoe 2024 Edition ED24R - Save 30%",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  productDetails.product?.title ?? "",
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.w600),
                 ),
               ),
               ItemsCounterWidget(
@@ -91,7 +124,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   onTapGetValue: (value) {}),
             ],
           ),
-          reviewAndRatingRow,
+          reviewAndRatingRow(productDetails.product?.star??0),
           const SizedBox(
             height: 8,
           ),
@@ -103,7 +136,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 height: 8,
               ),
               ColorSelector(
-                colors: colors,
+                colors: productDetails.color
+                        ?.split(",")
+                        .map((colorCode) => getColorFromString(colorCode))
+                        .toList() ??
+                    [] /*colors*/,
                 onChange: (selectedColor) {
                   _selectedColor = selectedColor;
                 },
@@ -116,7 +153,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 height: 8,
               ),
               SizeSelector(
-                sizes: sizes,
+                sizes: productDetails.size?.split(",") ?? [],
                 onChange: (size) {
                   _selectedSize = size;
                 },
@@ -128,9 +165,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               const SizedBox(
                 height: 8,
               ),
-              const Text(
-                '''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.''',
-                style: TextStyle(
+              Text(
+                productDetails.des ?? "",
+                style: const TextStyle(
                   color: Colors.grey,
                   fontSize: 14,
                 ),
@@ -142,26 +179,26 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  Row get reviewAndRatingRow {
+  Row reviewAndRatingRow(num rating) {
     return Row(
       children: [
         const SizedBox(
           width: 8,
         ),
-        const Wrap(
+        Wrap(
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.star,
               size: 18,
               color: Colors.amber,
             ),
-            SizedBox(
+            const SizedBox(
               width: 8,
             ),
             Text(
-              '4.4',
-              style: TextStyle(
+              rating.toStringAsPrecision(2),
+              style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                   color: Colors.black45),
@@ -264,5 +301,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         ],
       ),
     );
+  }
+
+  Color getColorFromString(String colorCode) {
+    String code = colorCode.replaceAll("#", "");
+    // String haxCode="FF$code";
+    return Color(int.parse("0xFF$code"));
   }
 }
