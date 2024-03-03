@@ -12,8 +12,8 @@ class AuthController extends GetxController {
 
   Future<void> saveUserDetails(String t, Profile p) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.setString("token", t);
-    await sharedPreferences.setString("profile", jsonEncode(p.toJson()));
+    await sharedPreferences.setString('token', t);
+    await sharedPreferences.setString('profile', jsonEncode(p.toJson()));
     token = t;
     profile = p;
   }

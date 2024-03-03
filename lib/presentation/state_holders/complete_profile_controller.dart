@@ -10,8 +10,6 @@ import 'package:crafty_bay_v1/data/services/network_caller.dart';
 import 'package:crafty_bay_v1/data/data_utility/urls.dart';
 import 'package:crafty_bay_v1/presentation/state_holders/auth_controller.dart';
 import 'package:get/get.dart';
-
-// import '../../data/models/create_profile_params.dart';
 import '../../data/models/profile.dart';
 
 class CompleteProfileController extends GetxController {

@@ -2,15 +2,15 @@
 library;
 
 
-import 'package:crafty_bay_v1/presentation/state_holders/auth_controller.dart';
+// import 'package:crafty_bay_v1/presentation/state_holders/auth_controller.dart';
 import 'package:crafty_bay_v1/presentation/ui/screens/main_bottom_nav_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // import '../../ui_utility/app_colors.dart';
+import '../../../state_holders/auth_controller.dart';
 import '../../widgets/app_logo.dart';
-// import '../main_bottom_nav_screen.dart';
-// import 'verify_email_screen.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

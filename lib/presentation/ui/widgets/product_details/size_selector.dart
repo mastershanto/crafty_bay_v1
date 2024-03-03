@@ -20,7 +20,8 @@ class _SizeSelectorState extends State<SizeSelector> {
 
   @override
   void initState() {
-    _selectedSize = "M";
+    _selectedSize = widget.sizes.first;
+    widget.onChange(_selectedSize);
     super.initState();
   }
 

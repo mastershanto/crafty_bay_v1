@@ -22,7 +22,7 @@ class SpecialProductController extends GetxController {
     bool isSuccess = false;
     _inProgress = true;
     update();
-    final response = await NetworkCaller().getRequest(Urls.specialProduct);
+    final response = await NetworkCaller().getRequest(Urls.popularProduct);
     _inProgress = false;
     if (response.isSuccess) {
       _productListModel = ProductListModel.fromJson(response.responseData);

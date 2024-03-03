@@ -28,11 +28,14 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
   @override
   void initState() {
     super.initState();
-    Get.find<HomeBannerController>().getBannerList();
-    Get.find<CategoryController>().getCategoryList();
-    Get.find<PopularProductController>().getPopularProductList();
-    Get.find<SpecialProductController>().getSpecialProductList();
-    Get.find<NewProductController>().getNewProductList();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp){
+      Get.find<HomeBannerController>().getBannerList();
+      Get.find<CategoryController>().getCategoryList();
+      Get.find<PopularProductController>().getPopularProductList();
+      Get.find<SpecialProductController>().getSpecialProductList();
+      Get.find<NewProductController>().getNewProductList();
+    });
+
   }
 
   final List<Widget> _screens=const[

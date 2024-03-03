@@ -16,7 +16,7 @@ class NetworkCaller {
     final Response response = await get(
       Uri.parse(url),
       headers: {
-        'token': token.toString(),
+        'token': (token ?? AuthController.token).toString(),
         'Content-type' : 'application/json'
       },
     );
@@ -39,6 +39,14 @@ class NetworkCaller {
           errorMessage: decodedResponse['data'] ?? 'Something went wrong',
         );
       }
+    } else if (response.statusCode == 401) {
+      await AuthController.clearAuthData();
+      AuthController.goToLogin();
+      return ResponseData(
+        isSuccess: false,
+        statusCode: response.statusCode,
+        responseData: '',
+      );
     } else {
       return ResponseData(
         isSuccess: false,
@@ -47,6 +55,7 @@ class NetworkCaller {
       );
     }
   }
+
   Future<ResponseData> postRequest(String url, {Map<String, dynamic>? body, String? token}) async {
     log(url);
     log(body.toString());
@@ -54,7 +63,7 @@ class NetworkCaller {
       Uri.parse(url),
       body: jsonEncode(body),
       headers: {
-        'token': token.toString(),
+        'token': AuthController.token.toString(),
         'Content-type': 'application/json'
       },
     );
@@ -76,6 +85,14 @@ class NetworkCaller {
           errorMessage: decodedResponse['data'] ?? 'Something went wrong',
         );
       }
+    } else if (response.statusCode == 401) {
+      await AuthController.clearAuthData();
+      AuthController.goToLogin();
+      return ResponseData(
+        isSuccess: false,
+        statusCode: response.statusCode,
+        responseData: '',
+      );
     } else {
       return ResponseData(
         isSuccess: false,

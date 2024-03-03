@@ -1,12 +1,12 @@
 ///isCodingWorkCompleted?=>"yes, completed";
 library;
 
-import 'package:crafty_bay_v1/presentation/ui/ui_utility/form_validator.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../state_holders/send_email_otp_controller.dart';
-import '../../ui_utility/app_colors.dart';
+
 import '../../widgets/app_logo.dart';
 import 'verify_otp_screen.dart';
 
@@ -23,78 +23,87 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppColors.primaryColor,
-      child: SafeArea(
-        child: Scaffold(
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    const SizedBox(height: 160),
-                    const AppLogo(
-                      height: 80,
-                    ),
-                    const SizedBox(height: 24),
-                    Text(
-                      "Welcome Back",
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "Please, enter your email address.",
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    TextFormField(
-                      controller: _emailTEController,
-                      validator: (value) => FormValidator.emailValidator(value),
-                      decoration: const InputDecoration(hintText: "Email"),
-                    ),
-                    const SizedBox(height: 8),
-                    GetBuilder<SendEmailOtpController>(
-                        builder: (sendEmailOtpController) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 160,
+                ),
+                const AppLogo(
+                  height: 80,
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                Text(
+                  'Welcome back',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  'Please enter your email address',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                TextFormField(
+                  controller: _emailTEController,
+                  decoration: const InputDecoration(hintText: 'Email'),
+                  validator: (value) {
+                    if (value?.trim().isEmpty ?? true) {
+                      return 'Enter your email';
+                    }
+                    // TODO: Validate email with Regex
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                GetBuilder<SendEmailOtpController>(
+                    builder: (controller) {
                       return SizedBox(
                         width: double.infinity,
                         child: Visibility(
-                          visible: sendEmailOtpController.inProgress == false,
-                          replacement:
-                              const Center(child: CircularProgressIndicator()),
+                          visible: controller.inProgress == false,
+                          replacement: const Center(
+                            child: CircularProgressIndicator(),
+                          ),
                           child: ElevatedButton(
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                final bool result =
-                                    await sendEmailOtpController.sendOtpToEmail(
-                                        _emailTEController.text.trim());
+                                final bool result = await controller.sendOtpToEmail(_emailTEController.text.trim());
                                 if (result) {
                                   Get.to(
-                                    VerifyOtpScreen(
+                                        () => VerifyOTPScreen(
                                       email: _emailTEController.text.trim(),
                                     ),
                                   );
                                 } else {
-                                  Get.showSnackbar(
-                                    GetSnackBar(
-                                      title: "Send OTP failed!",
-                                      message: sendEmailOtpController.errorMessage,
-                                    ),
-                                  );
+                                  Get.showSnackbar(GetSnackBar(
+                                    title: 'Send OTP failed',
+                                    message: controller.errorMessage,
+                                    duration: const Duration(seconds: 2),
+                                    isDismissible: true,
+                                  ));
                                 }
                               }
                             },
-                            child: const Text("Next"),
+                            child: const Text('Next'),
                           ),
                         ),
                       );
-                    }),
-                  ],
+                    }
                 ),
-              ),
+              ],
             ),
           ),
         ),
